@@ -80,7 +80,7 @@ var myCtrl = myApp.controller('myCtrl', function($scope, $http, $firebaseAuth, $
     $http.get(baseUrl + $scope.track).success(function(response){
       data = $scope.tracks = response.tracks.items
     })
-        
+
   }
 
   $scope.play = function(song) {
@@ -97,11 +97,6 @@ var myCtrl = myApp.controller('myCtrl', function($scope, $http, $firebaseAuth, $
     }
   }
 
-
-  $scope.findTop = function(song) {
-  
-
-  }
 });
 
 // Add tool tips to anything with a title property

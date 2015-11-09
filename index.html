@@ -73,7 +73,7 @@
 			</div>
 		</form>
 
-		<!-- Form -->
+		<!-- Form for searching spotify -->
 		<form class="container searchBar" name="songForm" ng-show="userId">
 			<div class="form-group">
 				<label class="searchLabel">Spotify Search:</label>
@@ -81,34 +81,32 @@
 				<p ng-show="songForm.search.$error.minlength">Search must be at least 3 characters long</p>
 			</div>
 			<div class="form-group">
-				<button class="btn btn-success" ng-click="getSongs(track)" type="submit" ng-disabled="songForm.search.$invalid || songForm.search.$error.minlength">Submit</button>
+				<button class="btn btn-primary" ng-click="getSongs(track)" type="submit" ng-disabled="songForm.search.$invalid || songForm.search.$error.minlength">Submit</button>
 			</div>
 		</form>
 		
-		<!-- Results -->
+		<!-- Results of search -->
 		<div class="container-fixed">
 			<p ng-show="tracks.length>0" class="help-block">Click Album Photo to Sample Track!</p>
 			<div class="container songList">
 				<div class="row col-sm-4" ng-repeat="track in tracks">
-					
-						<image ng-click="play(track.preview_url)" ng-class= "track.preview_url == currentSong ? 'playing' : ''" src="{{track.album.images[1].url}}" alt=""></image> 
-						<p class="songDet" style="text-align:center">{{track.name + ', by ' + track.artists[0].name}}</p>
-						<div class="container playingTitle" ng-show="track.preview_url == currentSong">
-							<h2 class="container playingHeader">Now playing</h2>
-							<button ng-click="">
-						</div>
+					<image ng-click="play(track.preview_url)" ng-class= "track.preview_url == currentSong ? 'playing' : ''" src="{{track.album.images[1].url}}" alt=""></image> 
+					<p class="songDet" style="text-align:center">{{track.name + ', by ' + track.artists[0].name}}</p>
+					<div class="container playingTitle" ng-show="track.preview_url == currentSong">
+						<h2 class="container playingHeader">Now playing</h2>
+						<button ng-click="">
+					</div>
 					</p>
 				</div>
-			</ul>
-		</div>
+			</div>
 		<div class="container history" ng-show="userId">
-			<h1>Site Seach History</h1>
+			<h1 class="siteSearchTitle">Copycat Site Search History:</h1>
 			<h2>Below are past searches from users</h2>
 			<p>Click on any of the past searches below to copy their search! </p>
 			<div class='container'>
 				<ul>
 					<li ng-repeat="key in users">
-						<text ng-click="getSongs(key.searchTerm)">{{key.searchTerm}} </text>
+						<text ng-click="getSongs(key.val())">{{key.searchTerm}} </text>
 					</li>
 				</ul>
 			</div>
