@@ -28,6 +28,7 @@ head {
 /*makes it more transparent when clicked   */
 .playing {
 	opacity:0.5;
+    position:relative;
 }
 
 .playingHeader {
