@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Spotify Challenge</title>
+	
+	<!-- Include libraries -->
+	<script src="https://code.jquery.com/jquery.min.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
+	<!-- Firebase -->
+		<script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+
+		<!-- AngularFire -->
+		<script src="https://cdn.firebase.com/libs/angularfire/1.1.3/angularfire.min.js"></script>
+		
+
+	<!-- Read scripts -->
+	<script src="app.js"></script>
+	<link href="app.css" type="text/css" rel="stylesheet"/>	
+	
+</head>
+<body>
+	<!-- Initiate app -->
+	<div class="container" ng-app="myApp" ng-controller="myCtrl">
+		<header class="container topBar">
+			<div class="container">
+				<image class="spotifyLogo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYheW-uzG515QmCTbrk88RUluqMkzu7gT1X8wG9IDOuTa-gQQ_"></image>
+				<div class="headInfo"> 
+					<h2 class="copycat"> Copycat </h2>
+					<p> Use other user's searches to inspire your Spotify search </p>
+				</div>
+			</div>
+			<div class="container log-out" ng-show="userId">
+				<button style="float: right;" ng-click="logOut()" class="btn btn-primary">Log Out</button>
+			</div> 
+			<hr>
+		</header>
+
+		<!--Form for login-->
+		<form class="container" name="loginForm" ng-show="!userId" novalidate>
+			<!--user full name (handle) -->
+			<h1 class="signInHearder">Sign in or Sign up</h1>
+			<div class="form-group">
+				<label>Full Name: </label>
+				<input ng-model="fullName" ng-minlength="5" name="fullName" class="form-control">
+				<p class="help-block" ng-show="loginForm.name.$error.minlength">Name is too short, please enter full name!</p>
+			</div>
+
+			<div class="form-group">
+				<label>Image Url: </label>
+				<img ng-src="{{userImage}}">
+				<input ng-model="userImage" name="img" class="form-control"> 
+			</div>
+
+			<div class="form-group">
+				<label>Email: </label>
+				<input ng-model="email" name="email" type="email" class="form-control"></input>
+				<p class="help-block" ng-show="loginForm.email.$error.email">Not a valid email</p>
+			</div>
+
+			<div class="form-group">
+				<label>Password: </label>
+				<input ng-model="password" name="password" type="password" ng-minlength="8" class="form-control" required></p>
+				<p class="help-block" ng-show="loginForm.password.$error.minlength">Password must be at least 8 characters!</p>
+			</div>
+			<div class="form-group">
+				<button ng-click="signUp()" ng-disabled="loginForm.$invalid" type="submit" class="btn btn-primary">Sign Up</button>
+				<button ng-click="login()" ng-disabled="loginForm.email.$invalid || loginForm.password.$invalid" type="submit" class="btn btn-primary">Log in</button>
+			</div>
+		</form>
+
+		<!-- Form -->
+		<form class="container searchBar" name="songForm" ng-show="userId">
+			<div class="form-group">
+				<label class="searchLabel">Spotify Search:</label>
+				<input name="search" placeholder="Search Spotify Tracks..." ng-model="track" class="form-control" ng-minlength="3"></input>
+				<p ng-show="songForm.search.$error.minlength">Search must be at least 3 characters long</p>
+			</div>
+			<div class="form-group">
+				<button class="btn btn-success" ng-click="getSongs(track)" type="submit" ng-disabled="songForm.search.$invalid || songForm.search.$error.minlength">Submit</button>
+			</div>
+		</form>
+		
+		<!-- Results -->
+		<div class="container-fixed">
+			<p ng-show="tracks.length>0" class="help-block">Click Album Photo to Sample Track!</p>
+			<div class="container songList">
+				<div class="row col-sm-4" ng-repeat="track in tracks">
+					
+						<image ng-click="play(track.preview_url)" ng-class= "track.preview_url == currentSong ? 'playing' : ''" src="{{track.album.images[1].url}}" alt=""></image> 
+						<p class="songDet" style="text-align:center">{{track.name + ', by ' + track.artists[0].name}}</p>
+						<div class="container playingTitle" ng-show="track.preview_url == currentSong">
+							<h2 class="container playingHeader">Now playing</h2>
+							<button ng-click="">
+						</div>
+					</p>
+				</div>
+			</ul>
+		</div>
+		<div class="container history" ng-show="userId">
+			<h1>Site Seach History</h1>
+			<h2>Below are past searches from users</h2>
+			<p>Click on any of the past searches below to copy their search! </p>
+			<div class='container'>
+				<ul>
+					<li ng-repeat="key in users">
+						<text ng-click="getSongs(key.searchTerm)">{{key.searchTerm}} </text>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

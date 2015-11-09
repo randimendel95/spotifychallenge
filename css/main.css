@@ -1,0 +1,72 @@
+body {
+  padding:10px;
+  background-color:black;
+  color:white;
+}
+
+hr{
+	width:100%;
+	margin:0;
+	padding:0;
+}
+
+head {
+	padding:10px;
+}
+
+.copycat {
+	font-size:40px;
+	position:relative;
+}
+.headInfo {
+	padding-left: 20px;
+	margin-left:20px;
+}
+
+/*makes it more transparent when clicked   */
+.playing {
+	opacity:0.5;
+}
+
+.playingHeader {
+   position:absolute;
+   top:50px;
+   width:100%;
+   color: white; 
+   background: rgba(0, 0, 0, 0.7);
+}
+
+.spotifyLogo {
+	float:left;
+}
+
+.topBar {
+	background-color:black;
+	width:100%;
+	padding:0;
+	margin:0;
+
+}
+
+.searchLabel {
+	margin-top:50px;
+	font-size:30px;
+	text-align:center;
+}
+
+.signInHeader {
+	position: center;
+}
+
+.songDet {
+	padding-bottom:20px;
+	text-align:center;
+}
+
+.searched {
+	list-style-type: disc;
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+    list-style-position: inside;
+}
